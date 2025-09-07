@@ -11,6 +11,7 @@ import { MLRecommender } from '../services/mlRecommender';
 import { CATEGORY_NAMES } from '../config/constants';
 import { CarbonCategories, Recommendation } from '../types';
 import { TrendingUp, TrendingDown, Users, Lightbulb, Map } from 'lucide-react';
+import { ChatBot } from '../components/ChatBot';
 
 ChartJS.register(ArcElement, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -143,18 +144,33 @@ export default function Dashboard() {
   };
 
   return (
-    <div ref={containerRef} className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 py-8">
-      <div className="container mx-auto px-4 max-w-6xl">
+    <div 
+      ref={containerRef} 
+      className="min-h-screen py-8 relative overflow-hidden"
+      style={{
+        background: `
+          linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(59, 130, 246, 0.08) 100%),
+          url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2310b981' fill-opacity='0.02'%3E%3Cpath d='M50 50c13.8 0 25-11.2 25-25S63.8 0 50 0 25 11.2 25 25s11.2 25 25 25zm25 25c13.8 0 25-11.2 25-25S88.8 50 75 50 50 61.2 50 75s11.2 25 25 25zM25 75c13.8 0 25-11.2 25-25S38.8 25 25 25 0 36.2 0 50s11.2 25 25 25z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")
+        `
+      }}
+    >
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-blue-200/10 to-green-200/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-green-200/10 to-blue-200/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '3s' }}></div>
+      </div>
+
+      <div className="container mx-auto px-4 max-w-6xl relative z-10">
         {/* Header */}
         <div className="dashboard-header text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-800 mb-2">Your Carbon Dashboard</h1>
-          <p className="text-gray-600">
-            Insights and recommendations based on your footprint
+          <p className="text-gray-600 leading-relaxed">
+            Insights and recommendations based on your Mumbai lifestyle footprint
           </p>
         </div>
 
         {/* Top Category Alert */}
-        <Card className="dashboard-card mb-8 bg-gradient-to-r from-blue-500 to-purple-600 text-white border-0">
+        <Card className="dashboard-card mb-8 bg-gradient-to-r from-blue-500 to-purple-600 text-white border-0 shadow-xl">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
@@ -172,7 +188,7 @@ export default function Dashboard() {
         {/* Charts Row */}
         <div className="grid md:grid-cols-2 gap-8 mb-8">
           {/* Pie Chart */}
-          <Card className="dashboard-card">
+          <Card className="dashboard-card bg-white/90 backdrop-blur-sm shadow-xl border-0">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <TrendingDown className="w-5 h-5" />
@@ -187,11 +203,11 @@ export default function Dashboard() {
           </Card>
 
           {/* Bar Chart */}
-          <Card className="dashboard-card">
+          <Card className="dashboard-card bg-white/90 backdrop-blur-sm shadow-xl border-0">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Users className="w-5 h-5" />
-                Community Comparison
+                Mumbai Community Comparison
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -206,17 +222,17 @@ export default function Dashboard() {
         </div>
 
         {/* Recommendations */}
-        <Card className="dashboard-card mb-8">
+        <Card className="dashboard-card mb-8 bg-white/90 backdrop-blur-sm shadow-xl border-0">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Lightbulb className="w-5 h-5" />
-              AI-Powered Recommendations
+              AI-Powered Mumbai Recommendations
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               {recommendations.map((rec, index) => (
-                <div key={rec.id} className="recommendation-item p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
+                <div key={rec.id} className="recommendation-item p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow bg-white/50">
                   <div className="flex items-start justify-between mb-2">
                     <h4 className="font-semibold text-gray-800">{rec.title}</h4>
                     <div className="flex items-center gap-2">
@@ -239,7 +255,7 @@ export default function Dashboard() {
         <div className="flex flex-wrap gap-4 justify-center">
           <Button 
             onClick={() => navigate('/map')}
-            className="bg-green-600 hover:bg-green-700 flex items-center gap-2"
+            className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 flex items-center gap-2 shadow-lg hover:shadow-xl transition-all duration-300"
           >
             <Map className="w-4 h-4" />
             View Community Map
@@ -247,7 +263,7 @@ export default function Dashboard() {
           <Button 
             onClick={() => navigate('/survey')}
             variant="outline"
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 bg-white/80 hover:bg-white shadow-sm hover:shadow-md transition-all duration-300"
           >
             <TrendingDown className="w-4 h-4" />
             Update Survey
@@ -255,13 +271,15 @@ export default function Dashboard() {
           <Button 
             onClick={() => navigate('/powerbi')}
             variant="outline"
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 bg-white/80 hover:bg-white shadow-sm hover:shadow-md transition-all duration-300"
           >
             <TrendingUp className="w-4 h-4" />
             Advanced Analytics
           </Button>
         </div>
       </div>
+
+      <ChatBot currentPage="dashboard" />
     </div>
   );
 }
