@@ -15,7 +15,12 @@ export type CarbonCategoricals = {
   Recycling: string;
   Cooking_With: string;
   "Social Activity": string;
+
+  subdomain: string;
+  city: string;
+  country: string;
 };
+
 export interface CarbonEntry {
   uid: string;
   lat: number;
