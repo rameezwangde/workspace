@@ -1,2 +1,2 @@
-country,total_co2_count,total_co2_median,total_co2_p75
-India,10000,1047.0,2756.25
+country,total_co2_count,total_co2_median,total_co2_p75,Monthly Grocery Bill_mean,Vehicle Monthly Distance Km_mean,Waste Bag Weekly Count_mean,How Long TV PC Daily Hour_mean,How Many New Clothes Monthly_mean,How Long Internet Daily Hour_mean,Diet_factor_mean,Heating Energy Source_factor_mean,Recycling_factor_mean,Cooking_With_factor_mean,Social Activity_factor_mean
+India,10000,1047.0,2756.25,173.8752,2031.4859,4.0246,12.1392,25.109,11.8891,0.0,0.0,0.0,0.0,0.0
