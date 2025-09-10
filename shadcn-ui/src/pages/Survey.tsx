@@ -17,7 +17,7 @@ export default function Survey() {
   const containerRef = useRef<HTMLDivElement>(null);
   const totalRef = useRef<HTMLDivElement>(null);
 
-  // === your original numeric sliders ===
+  // numeric sliders
   const [categories, setCategories] = useState<CarbonCategories>({
     transport_km: 100,
     electricity_kWh: 300,
@@ -29,38 +29,33 @@ export default function Survey() {
     waste_kg: 50,
   });
 
-  // === new categorical selects (kept in component state) ===
+  // categorical selects
   const [categoricals, setCategoricals] = useState<CarbonCategoricals>({
-  Diet: "Omnivore",
-  "Heating Energy Source": "Electricity",
-  Recycling: "Sometimes",
-  Cooking_With: "LPG",
-  "Social Activity": "Medium",
+    Diet: 'Omnivore',
+    'Heating Energy Source': 'Electricity',
+    Recycling: 'Sometimes',
+    Cooking_With: 'LPG',
+    'Social Activity': 'Medium',
+    subdomain: 'Engineering',
+    city: 'Mumbai',
+    country: 'India',
+  });
 
-  subdomain: "Engineering",
-  city: "Mumbai",
-  country: "India",
-});
-
-
-  // emission factors loaded from /public/data/emission_factors.json
+  // emission factors
   const [factors, setFactors] = useState<Factors>({});
-
   useEffect(() => {
-    // IMPORTANT: make sure a copy of emission_factors.json is in /public/data/
     fetch('/data/emission_factors.json')
       .then(r => r.json())
       .then(setFactors)
       .catch(() => setFactors({}));
   }, []);
 
-  // your original numeric total
+  // totals
   const numericTotal = useMemo(
     () => CarbonCalculator.calculateTotalCO2(categories),
     [categories]
   );
 
-  // added categorical contribution
   const categoricalTotal = useMemo(() => {
     let sum = 0;
     for (const [k, v] of Object.entries(categoricals)) {
@@ -70,24 +65,24 @@ export default function Survey() {
     return sum;
   }, [categoricals, factors]);
 
-  // new final total = numeric + categorical factors
   const totalCO2 = numericTotal + categoricalTotal;
+  const progress = Math.min((totalCO2 / 500) * 100, 100);
 
-  const progress = Math.min((totalCO2 / 500) * 100, 100); // same scale as before
-
+  // animations
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo(".survey-header", { opacity: 0, y: -30 }, { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" });
-      gsap.fromTo(".slider-container", { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 0.6, stagger: 0.1, delay: 0.3, ease: "power2.out" });
-      gsap.fromTo(".total-card", { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.8, delay: 0.5, ease: "back.out(1.7)" });
+      gsap.fromTo('.survey-header', { opacity: 0, y: -30 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' });
+      gsap.fromTo('.slider-container', { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 0.6, stagger: 0.1, delay: 0.3, ease: 'power2.out' });
+      gsap.fromTo('.total-card', { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.8, delay: 0.5, ease: 'back.out(1.7)' });
     }, containerRef);
     return () => ctx.revert();
   }, []);
 
   useEffect(() => {
-    gsap.to(totalRef.current, { scale: 1.05, duration: 0.1, yoyo: true, repeat: 1, ease: "power2.inOut" });
+    gsap.to(totalRef.current, { scale: 1.05, duration: 0.1, yoyo: true, repeat: 1, ease: 'power2.inOut' });
   }, [totalCO2]);
 
+  // handlers
   const handleCategoryChange = (category: keyof CarbonCategories, value: number) => {
     setCategories(prev => ({ ...prev, [category]: value }));
   };
@@ -98,25 +93,24 @@ export default function Survey() {
 
   const handleSubmit = () => {
     const surveyData = {
-      categories,            // numeric
-      categoricals,          // categorical
+      categories,
+      categoricals,
       totalCO2,
       numericTotal,
       categoricalTotal,
       timestamp: new Date().toISOString(),
-      location: JSON.parse(localStorage.getItem('userLocation') || '{}')
+      location: JSON.parse(localStorage.getItem('userLocation') || '{}'),
     };
     localStorage.setItem('carbonSurvey', JSON.stringify(surveyData));
     gsap.to(containerRef.current, {
-      opacity: 0, y: -20, duration: 0.5, onComplete: () => navigate('/dashboard')
+      opacity: 0,
+      y: -20,
+      duration: 0.5,
+      onComplete: () => navigate('/dashboard'),
     });
   };
 
-  const getCO2Color = (co2: number) => {
-    if (co2 < 200) return 'text-green-600';
-    if (co2 < 400) return 'text-yellow-600';
-    return 'text-red-600';
-  };
+  const getCO2Color = (co2: number) => (co2 < 200 ? 'text-green-600' : co2 < 400 ? 'text-yellow-600' : 'text-red-600');
 
   return (
     <div ref={containerRef} className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 py-8">
@@ -153,60 +147,48 @@ export default function Survey() {
             </div>
           </CardContent>
         </Card>
+
         {/* Profile info */}
-<div className="space-y-4 mb-8">
-  {/* Subdomain */}
-  <div className="slider-container">
-    <div className="mb-2 text-sm font-medium text-gray-700">Profession / Subdomain</div>
-    <Select value={categoricals.subdomain} onValueChange={(v) => setCategoricals(prev => ({ ...prev, subdomain: v }))}>
-      <SelectTrigger className="w-full"><SelectValue placeholder="Select subdomain" /></SelectTrigger>
-      <SelectContent>
-        {["Engineering","Finance","Sales","Operations","Student","Other"].map(o => (
-          <SelectItem key={o} value={o}>{o}</SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
-  </div>
+        <div className="space-y-4 mb-8">
+          {/* Subdomain */}
+          <div className="slider-container">
+            <div className="mb-2 text-sm font-medium text-gray-700">Profession / Subdomain</div>
+            <Select value={categoricals.subdomain} onValueChange={(v) => setCategoricals(prev => ({ ...prev, subdomain: v }))}>
+              <SelectTrigger className="w-full"><SelectValue placeholder="Select subdomain" /></SelectTrigger>
+              <SelectContent>
+                {['Engineering','Finance','Sales','Operations','Student','Other'].map(o => (
+                  <SelectItem key={o} value={o}>{o}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
 
-  {/* City */}
-  <div className="slider-container">
-    <div className="mb-2 text-sm font-medium text-gray-700">City</div>
-    <Select value={categoricals.city} onValueChange={(v) => setCategoricals(prev => ({ ...prev, city: v }))}>
-      <SelectTrigger className="w-full"><SelectValue placeholder="Select city" /></SelectTrigger>
-      <SelectContent>
-        {["Mumbai","Navi Mumbai","Delhi","Bengaluru","Chennai","Kolkata","Hyderabad","Pune","Jaipur","Ahmedabad"].map(c => (
-          <SelectItem key={c} value={c}>{c}</SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
-  </div>
+          {/* City */}
+          <div className="slider-container">
+            <div className="mb-2 text-sm font-medium text-gray-700">City</div>
+            <Select value={categoricals.city} onValueChange={(v) => setCategoricals(prev => ({ ...prev, city: v }))}>
+              <SelectTrigger className="w-full"><SelectValue placeholder="Select city" /></SelectTrigger>
+              <SelectContent>
+                {['Mumbai','Navi Mumbai','Delhi','Bengaluru','Chennai','Kolkata','Hyderabad','Pune','Jaipur','Ahmedabad'].map(c => (
+                  <SelectItem key={c} value={c}>{c}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
 
-  {/* Country */}
-  <div className="slider-container">
-    <div className="mb-2 text-sm font-medium text-gray-700">Country</div>
-    <Select value={categoricals.country} onValueChange={(v) => setCategoricals(prev => ({ ...prev, country: v }))}>
-      <SelectTrigger className="w-full"><SelectValue placeholder="Select country" /></SelectTrigger>
-      <SelectContent>
-        <SelectItem value="India">India</SelectItem>
-      </SelectContent>
-    </Select>
-  </div>
-</div>
+          {/* Country */}
+          <div className="slider-container">
+            <div className="mb-2 text-sm font-medium text-gray-700">Country</div>
+            <Select value={categoricals.country} onValueChange={(v) => setCategoricals(prev => ({ ...prev, country: v }))}>
+              <SelectTrigger className="w-full"><SelectValue placeholder="Select country" /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="India">India</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
 
-{/* Sliders (unchanged API) */}
-<div className="space-y-4 mb-8">
-  {Object.entries(categories).map(([category, value]) => (
-    <div key={category} className="slider-container">
-      <CarbonSlider
-        category={category as keyof CarbonCategories}
-        value={value as number}
-        onChange={(newValue) => handleCategoryChange(category as keyof CarbonCategories, newValue)}
-      />
-    </div>
-  ))}
-</div>
-
-        {/* Sliders (unchanged API) */}
+        {/* Sliders (single, non-duplicated) */}
         <div className="space-y-4 mb-8">
           {Object.entries(categories).map(([category, value]) => (
             <div key={category} className="slider-container">
