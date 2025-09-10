@@ -1,0 +1,11 @@
+country,city,total_co2_count,total_co2_median,total_co2_p75
+India,Ahmedabad,1000,983.0,2230.5
+India,Bengaluru,1000,869.5,2498.0
+India,Chennai,1000,1019.0,2295.0
+India,Delhi,1000,1093.0,2509.25
+India,Hyderabad,1000,1131.0,3102.25
+India,Jaipur,1000,1136.0,3065.0
+India,Kolkata,1000,1027.5,2594.75
+India,Mumbai,1000,1102.5,3116.25
+India,Navi Mumbai,1000,1049.5,2845.75
+India,Pune,1000,1035.5,3032.25

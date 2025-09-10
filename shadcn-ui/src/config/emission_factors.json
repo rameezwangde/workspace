@@ -1,0 +1,32 @@
+{
+  "Diet": {
+    "Vegan": 2.0,
+    "Vegetarian": 2.5,
+    "Pescatarian": 3.0,
+    "Omnivore": 5.0,
+    "Meat-Heavy": 6.0
+  },
+  "Heating Energy Source": {
+    "Electricity": 0.5,
+    "Natural Gas": 2.0,
+    "Coal": 3.5,
+    "Renewable": 0.0,
+    "None": 0.0
+  },
+  "Recycling": {
+    "Always": 0.0,
+    "Sometimes": 50.0,
+    "Never": 100.0
+  },
+  "Cooking_With": {
+    "Electricity": 0.5,
+    "LPG": 2.0,
+    "Wood": 3.0,
+    "Coal": 3.5
+  },
+  "Social Activity": {
+    "Low": 50.0,
+    "Medium": 100.0,
+    "High": 200.0
+  }
+}
