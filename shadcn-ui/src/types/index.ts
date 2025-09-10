@@ -1,3 +1,4 @@
+
 export interface CarbonCategories {
   transport_km: number;
   electricity_kWh: number;
@@ -8,7 +9,13 @@ export interface CarbonCategories {
   shopping_spend: number;
   waste_kg: number;
 }
-
+export type CarbonCategoricals = {
+  Diet: string;
+  "Heating Energy Source": string;
+  Recycling: string;
+  Cooking_With: string;
+  "Social Activity": string;
+};
 export interface CarbonEntry {
   uid: string;
   lat: number;

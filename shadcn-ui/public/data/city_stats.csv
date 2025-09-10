@@ -1,0 +1,11 @@
+country,city,total_co2_count,total_co2_median,total_co2_p75,Monthly Grocery Bill_mean,Vehicle Monthly Distance Km_mean,Waste Bag Weekly Count_mean,How Long TV PC Daily Hour_mean,How Many New Clothes Monthly_mean,How Long Internet Daily Hour_mean,Diet_factor_mean,Heating Energy Source_factor_mean,Recycling_factor_mean,Cooking_With_factor_mean,Social Activity_factor_mean
+India,Ahmedabad,1000,983.0,2230.5,173.265,1999.463,4.023,12.36,25.316,11.841,0.0,0.0,0.0,0.0,0.0
+India,Bengaluru,1000,869.5,2498.0,172.991,1915.059,3.934,12.219,25.229,11.878,0.0,0.0,0.0,0.0,0.0
+India,Chennai,1000,1019.0,2295.0,169.198,1958.306,3.996,12.135,24.841,11.832,0.0,0.0,0.0,0.0,0.0
+India,Delhi,1000,1093.0,2509.25,177.134,1952.107,3.997,12.084,25.2,11.878,0.0,0.0,0.0,0.0,0.0
+India,Hyderabad,1000,1131.0,3102.25,173.67,2075.733,3.963,12.468,25.918,11.728,0.0,0.0,0.0,0.0,0.0
+India,Jaipur,1000,1136.0,3065.0,178.572,2119.025,4.029,12.395,25.56,11.798,0.0,0.0,0.0,0.0,0.0
+India,Kolkata,1000,1027.5,2594.75,175.122,1981.112,4.103,11.672,25.228,11.77,0.0,0.0,0.0,0.0,0.0
+India,Mumbai,1000,1102.5,3116.25,174.822,2141.291,3.982,11.95,24.939,12.225,0.0,0.0,0.0,0.0,0.0
+India,Navi Mumbai,1000,1049.5,2845.75,171.755,2088.365,4.093,12.016,24.02,11.719,0.0,0.0,0.0,0.0,0.0
+India,Pune,1000,1035.5,3032.25,172.223,2084.398,4.126,12.093,24.839,12.222,0.0,0.0,0.0,0.0,0.0
